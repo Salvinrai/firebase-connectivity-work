@@ -5,8 +5,11 @@ const bodyParser = require('body-parser');
 const register = require('./modals/student');
 //const firebase = require('firebase/firestore');
 //const firestore = firebase.getFirestore();
-const work1 = require('./controller/registercontroller');
+//const work1 = require('./controller/registercontroller');
 const path = require('path');
+
+// const register = require('../modals/student');
+const db = require('./db');
 const main_path =path.join(__dirname,'/html');
 console.log(main_path);
 
@@ -31,4 +34,15 @@ app.get('/',(req,res)=>{
     res.sendFile(path.join(__dirname+'/html/index.html'))
 });
 
-app.post('/register', work1);
+app.post('/register', async(req,res)=>{
+    try {
+        const data =  req.body;
+        var test = req.body.id;
+        console.log(test);
+         console.log(data);
+         const student = await db.collection('students').doc('register').set(data);
+         res.send('record saved successfull');
+     } catch (error) {
+         res.status(400).send(error.message);
+     }
+});
