@@ -36,11 +36,20 @@ app.get('/',(req,res)=>{
 
 app.post('/register', async(req,res)=>{
     try {
-        const data =  req.body;
-        var test = req.body.id;
-        console.log(test);
-         console.log(data);
-         const student = await db.collection('students').doc('register').set(data);
+        // const data =  register.Student;
+        // var test = req.body.id;
+        // console.log(test);
+        //  console.log(data);
+        var id  = req.body.id;
+        const first = req.body.first;
+        const last = req.body.last; 
+        console.log(id);
+        console.log(first);
+        console.log(last);
+
+         const student = await db.collection('students').doc('register').set({
+            name: 'San Francisco', state: 'CA', country: 'USA',
+            capital: false, population: 860000});
          res.send('record saved successfull');
      } catch (error) {
          res.status(400).send(error.message);
